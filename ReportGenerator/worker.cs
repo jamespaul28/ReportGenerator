@@ -10,6 +10,15 @@ using System.Threading.Tasks;
 
 namespace ReportGenerator
 {
+    class InvalidImageFileException: Exception
+    {
+        public InvalidImageFileException(string path)
+            : base(String.Format("Invalid Image File: {0}", path))
+        {
+
+        }
+    }
+
     class attendance
     {
         public DateTime timeIn;
@@ -80,14 +89,45 @@ namespace ReportGenerator
 
         private DateTime GetDateTakenFromImage(string path)
         {
-            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-            using (Image myImage = Image.FromStream(fs, false, false))
+            // Get DateTime from dateTaken metadata.
+            try
             {
-                PropertyItem propItem = myImage.GetPropertyItem(36867);
-                string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
-                return DateTime.Parse(dateTaken);
+                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                using (Image myImage = Image.FromStream(fs, false, false))
+                {
+                    PropertyItem propItem = myImage.GetPropertyItem(36867);
+                    string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
+                    return DateTime.Parse(dateTaken);
+                }
+            } catch
+            {
+                // Do nothing.
+            }
+
+            // Get DateTime from filename.
+            try
+            {
+                string[] dateString = path.Split('\\');
+                string dateTakenRaw = Path.GetFileNameWithoutExtension(dateString[dateString.Length - 1]);
+                // Expected filename format 20210323_160314.jpg
+                string[] dayAndTime = dateTakenRaw.Split('_');
+                
+                string year = dayAndTime[0].Substring(0, 4);
+                string month = dayAndTime[0].Substring(4, 2);
+                string day = dayAndTime[0].Substring(6, 2);
+
+                string hour = dayAndTime[1].Substring(0, 2);
+                string minute = dayAndTime[1].Substring(2, 2);
+                string second = dayAndTime[1].Substring(4, 2);
+
+                // Expected string format for date parsing '08/18/2018 07:22:16'-- > 8 / 18 / 2018 7:22:16 AM
+                string dateTaken = String.Format("{0}/{1}/{2} {3}:{4}:{5}", month, day, year, hour, minute, second);
+
+                return DateTime.ParseExact(dateTaken, "MM/dd/yyyy HH:mm:ss", null);
+            } catch
+            {
+                throw new InvalidImageFileException(path);
             }
         }
-
     }
 }

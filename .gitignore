@@ -1,0 +1,7 @@
+.vs/
+DataSample/
+ReportGenerator/bin/Debug
+ReportGenerator/bin/Release/ReportGenerator.pdb
+ReportGenerator/bin/Release/ReportGenerator.exe.config
+ReportGenerator/bin/Release/config.xml
+ReportGenerator/obj/
