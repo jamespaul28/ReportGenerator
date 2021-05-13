@@ -1,6 +1,6 @@
 ﻿namespace ReportGenerator
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -74,7 +74,7 @@
             this.generateButton.TabIndex = 0;
             this.generateButton.Text = "Generate";
             this.generateButton.UseVisualStyleBackColor = true;
-            this.generateButton.Click += new System.EventHandler(this.button1_Click);
+            this.generateButton.Click += new System.EventHandler(this.generate_Click);
             // 
             // dataGridView1
             // 
@@ -322,7 +322,7 @@
             this.exportButton.TabIndex = 22;
             this.exportButton.Text = "Export";
             this.exportButton.UseVisualStyleBackColor = true;
-            this.exportButton.Click += new System.EventHandler(this.button2_Click);
+            this.exportButton.Click += new System.EventHandler(this.export_Click);
             // 
             // label8
             // 
@@ -366,7 +366,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Backup";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.button1.Click += new System.EventHandler(this.backup_Click);
             // 
             // Form1
             // 
@@ -384,7 +384,7 @@
             this.Margin = new System.Windows.Forms.Padding(1);
             this.Name = "Form1";
             this.Text = "Attendance Report Generator";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

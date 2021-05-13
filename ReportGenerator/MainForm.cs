@@ -26,19 +26,19 @@ namespace ReportGenerator
         public string inputPath;
     }
 
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         DataTable m_dtReport;
         List<worker> m_listWorkers = new List<worker>();
         FolderBrowserDialog getFolderDir = new FolderBrowserDialog();
         string configFilepath = Path.Combine(Directory.GetCurrentDirectory(), "config.xml");
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             // Main Form Size
             //this.Size = new Size(1250, 850);
-            this.WindowState = FormWindowState.Maximized;
+            this.WindowState = FormWindowState.Normal;
             var defaultVal = this.getDefaultValues();
 
             // Grace Period
@@ -74,7 +74,7 @@ namespace ReportGenerator
             startPeriodPicker.Value = DateTime.Today.AddDays(-6);
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 
         {
             XElement config = new XElement("Settings",
@@ -141,7 +141,7 @@ namespace ReportGenerator
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void generate_Click(object sender, EventArgs e)
         {
             if (!Directory.Exists(InputPath.Text))
             {
@@ -314,7 +314,7 @@ namespace ReportGenerator
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void export_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "CSV file (*.csv)|*.csv| All Files (*.*)|*.*";
@@ -413,7 +413,7 @@ namespace ReportGenerator
             }
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void backup_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "CSV file (*.csv)|*.csv| All Files (*.*)|*.*";
